@@ -11,7 +11,9 @@ public class MiniGames : MonoBehaviour
     {
         Button button = GetComponentInChildren<Button>();
         button.interactable = false;
-        Instantiate(MiniGamesPanel);
+        GameObject minigames =  Instantiate(MiniGamesPanel);
+        minigames.transform.parent = null;
+        Destroy(gameObject);
         Time.timeScale = 0f;
     }
 
@@ -19,11 +21,26 @@ public class MiniGames : MonoBehaviour
     {
         GameManajer gameManajer = FindAnyObjectByType<GameManajer>();
         gameManajer.MinigamesClear++;
+        gameManajer.MiniGamesCleartext.text= gameManajer.MinigamesClear.ToString();
         gameManajer.SpawnMinigames = false;
         Destroy(gameObject);
         Time.timeScale = 1f;
     }
 
+    public void WinGames()
+    {
+        GameManajer gameManajer = FindAnyObjectByType<GameManajer>();
+        gameManajer.MinigamesClear++;
+        gameManajer.MiniGamesCleartext.text = gameManajer.MinigamesClear.ToString();
+        gameManajer.SpawnMinigames = false;
+        Destroy(gameObject);
+        Time.timeScale = 1f;
 
+    }
+
+    public void LoseGames()
+    {
+
+    }
 
 }

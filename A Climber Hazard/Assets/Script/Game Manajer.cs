@@ -6,23 +6,38 @@ using TMPro;
 
 public class GameManajer : MonoBehaviour
 {
-    public TMP_Text ScoreText, MiniGamestext;
+    public TMP_Text ScoreText, MiniGamesCleartext, MiniGamesTargetText;
     public float Score;
+    public float TargetScore;
     public float MinigamesClear;
     public GameObject LoseMenu;
+    public GameObject WinMenu;
     public bool SpawnMinigames = false;
-
+    [SerializeField] private Animator animator;
     int ScoreCount = 0;
     MoveByTouch move;
     MiniGamesSpawner gamesSpawner;
+    bool Lose = false;
     private void Start()
     {
         Time.timeScale = 1f;
         move = FindAnyObjectByType<MoveByTouch>();
         gamesSpawner = FindAnyObjectByType<MiniGamesSpawner>();
+        MiniGamesCleartext.text = MinigamesClear.ToString();
+        MiniGamesTargetText.text = TargetScore.ToString();
     }
     void Update()
     {
+        if(Lose)
+        {
+            return;
+        }
+
+        if (TargetScore == MinigamesClear)
+        {
+            WinGame();
+            return;
+        }
   
         //Spawn Minigames button
         if(Mathf.Round(Score) % 10 == 0 && !SpawnMinigames && Mathf.Round(Score) != 0 && Score > ScoreCount)
@@ -34,12 +49,20 @@ public class GameManajer : MonoBehaviour
 
         //Update Score
         Score += move.Arah * Time.deltaTime;
-        MiniGamestext.text = MinigamesClear.ToString();
+        animator.speed = Mathf.Abs(move.Arah);
+        //MiniGamestext.text = MinigamesClear.ToString();
         ScoreText.text = Score.ToString("0");
     }
     
+
+    public void WinGame()
+    {
+        Time.timeScale = 0f;
+        WinMenu.SetActive(true);
+    }
     public void LoseGame()
     {
+        Lose = true;
         Time.timeScale = 0f;
         LoseMenu.SetActive(true);
     }
