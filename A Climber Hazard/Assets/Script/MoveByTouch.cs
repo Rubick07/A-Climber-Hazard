@@ -43,5 +43,9 @@ public class MoveByTouch : MonoBehaviour
         }
     }
 
-
+    public void diam()
+    {
+        rb.velocity = Vector2.zero;
+        Arah = 0;
+    }
 }

@@ -6,16 +6,22 @@ using UnityEngine.UI;
 public class MiniGames : MonoBehaviour
 {
     public GameObject MiniGamesPanel;
+    private Player player;
 
+    private void Start()
+    {
+        player = FindAnyObjectByType<Player>().GetComponent<Player>();
+    }
     public void SpawnMinigamesPanel()
     {
         Button button = GetComponentInChildren<Button>();
         button.interactable = false;
-        GameObject minigames =  Instantiate(MiniGamesPanel);
+        GameObject minigames =  Instantiate(MiniGamesPanel, player.transform);
         minigames.transform.parent = null;
         Destroy(gameObject);
         Time.timeScale = 0f;
     }
+
 
     public void MinigamesTali()
     {

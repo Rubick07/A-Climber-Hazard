@@ -12,6 +12,7 @@ public class GameManajer : MonoBehaviour
     public float MinigamesClear;
     public GameObject LoseMenu;
     public GameObject WinMenu;
+    public GameObject BelomSelesaiText;
     public bool SpawnMinigames = false;
     [SerializeField] private Animator animator;
     int ScoreCount = 0;
@@ -33,12 +34,8 @@ public class GameManajer : MonoBehaviour
             return;
         }
 
-        if (TargetScore == MinigamesClear)
-        {
-            WinGame();
-            return;
-        }
-  
+
+        /*
         //Spawn Minigames button
         if(Mathf.Round(Score) % 10 == 0 && !SpawnMinigames && Mathf.Round(Score) != 0 && Score > ScoreCount)
         {
@@ -46,6 +43,7 @@ public class GameManajer : MonoBehaviour
             SpawnMinigames = true;
             gamesSpawner.Spawn();
         }
+        */
 
         //Update Score
         Score += move.Arah * Time.deltaTime;
@@ -67,5 +65,33 @@ public class GameManajer : MonoBehaviour
         LoseMenu.SetActive(true);
     }
 
+    public void BelomSelesai()
+    {
+        GameObject BelomselesaiObject = Instantiate(BelomSelesaiText, transform);
+        MoveByTouch moveByTouch = GetComponent<MoveByTouch>();
+        moveByTouch.diam();
+        Destroy(BelomselesaiObject, 1f);
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.CompareTag("finish"))
+        {
+            if (TargetScore == MinigamesClear)
+            {
+                WinGame();
+                return;
+            }
+            else
+            {
+                BelomSelesai();
+                return;
+            }
+
+        }
+
+        
+    }
 }

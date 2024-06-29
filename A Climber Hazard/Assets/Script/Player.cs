@@ -12,6 +12,21 @@ public class Player : MonoBehaviour
             gameManajer.LoseGame();
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.CompareTag("finish"))
+        {
+            GameManajer gameManajer = GetComponentInParent<GameManajer>();
+            if (gameManajer.TargetScore == gameManajer.MinigamesClear)
+            {
+                gameManajer.WinGame();
+                return;
+            }
+            else
+            {
+                gameManajer.BelomSelesai();
+                return;
+            }
+        }
     }
 
 

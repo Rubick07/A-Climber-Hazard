@@ -133,7 +133,8 @@ public class DragControl : MonoBehaviour
         if(benar == kabels.Length)
         {
             Debug.Log("menang");
-            FindAnyObjectByType<MiniGames>().WinGames();
+            MiniGames miniGames = GetComponentInParent<MiniGames>();
+            miniGames.WinGames();
         }
 
     }
